@@ -26,7 +26,7 @@ const adminLogin = async (req, res, next) => {
     }
 
     req.session.user = user;
-    console.log("Session User in adminController:", req.session.user);
+    console.log("Session User:", req.session.user);
     return res.redirect("/api/admin/dashboard");
   } catch (error) {
     console.error("Error:", error);
@@ -69,6 +69,7 @@ const userList = async (req, res, next) => {
   }
 };
 
+// Stories list controller
 const storiesList = async (req, res, next) => {
   try {
     const stories = await Story.find();
@@ -79,6 +80,7 @@ const storiesList = async (req, res, next) => {
   }
 };
 
+// Delete user controller
 const deleteUser = async (req, res) => {
   const user_id = req.params.user_id;
 
@@ -97,10 +99,11 @@ const deleteUser = async (req, res) => {
   }
 };
 
+// Delete story controller
 const deleteStory = async (req, res) => {
   const story_id = req.params.id;
   try {
-    const story = await Story.deleteOne(story_id);
+    const story = await Story.deleteOne({ _id: story_id });
     if (!story) {
       return res.status(404).json({ message: "Story not found" });
     }
