@@ -101,7 +101,7 @@ const deleteUser = async (req, res) => {
 
 // Delete story controller
 const deleteStory = async (req, res) => {
-  const story_id = req.params.id;
+  const story_id = req.params.story_id;
   try {
     const story = await Story.deleteOne({ _id: story_id });
     if (!story) {
