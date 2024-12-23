@@ -23,11 +23,7 @@ app.use(
     secret: process.env.SESSION_SECRET || "mysecret", // Session secret
     resave: false,
     saveUninitialized: false,
-    cookie: {
-      secure: process.env.NODE_ENV === "production", // Set to true in production (for HTTPS)
-      maxAge: 3600000, // Session expires after 1 hour
-      httpOnly: true, // Make the cookie accessible only by the server
-    },
+    cookie: { secure: true, maxAge: 3600000 }, // Session expires after 1 hour
   })
 );
 

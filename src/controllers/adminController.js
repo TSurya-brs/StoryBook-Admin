@@ -26,7 +26,7 @@ const adminLogin = async (req, res, next) => {
     }
 
     req.session.user = user;
-    console.log("Session User:", req.session.user);
+    console.log("Session User in adminController:", req.session.user);
     return res.redirect("/api/admin/dashboard");
   } catch (error) {
     console.error("Error:", error);
