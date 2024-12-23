@@ -2,7 +2,6 @@ import User from "../models/adminModel.js";
 import Story from "../models/storiesModel.js";
 import bcrypt from "bcryptjs";
 
-// Admin login controller
 const adminLogin = async (req, res, next) => {
   const { email, password } = req.body;
 
@@ -26,7 +25,7 @@ const adminLogin = async (req, res, next) => {
       return res.render("login", { message: "Invalid password" });
     }
 
-    req.session.user = user; // Save user in session
+    req.session.user = user;
     console.log("Session User:", req.session.user);
     return res.redirect("/api/admin/dashboard");
   } catch (error) {
@@ -37,7 +36,6 @@ const adminLogin = async (req, res, next) => {
   }
 };
 
-// Admin dashboard controller
 const adminDashboard = async (req, res, next) => {
   try {
     const userCount = await User.countDocuments({ isAdmin: { $ne: true } });
@@ -51,7 +49,6 @@ const adminDashboard = async (req, res, next) => {
   }
 };
 
-// User list controller
 const userList = async (req, res, next) => {
   try {
     const users = await User.find({ isAdmin: { $ne: true } });
@@ -72,7 +69,6 @@ const userList = async (req, res, next) => {
   }
 };
 
-// Stories list controller
 const storiesList = async (req, res, next) => {
   try {
     const stories = await Story.find();
@@ -83,7 +79,6 @@ const storiesList = async (req, res, next) => {
   }
 };
 
-// Delete user controller
 const deleteUser = async (req, res) => {
   const user_id = req.params.user_id;
 
@@ -102,7 +97,6 @@ const deleteUser = async (req, res) => {
   }
 };
 
-// Delete story controller
 const deleteStory = async (req, res) => {
   const story_id = req.params.id;
   try {

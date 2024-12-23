@@ -7,7 +7,6 @@
     <!-- Link to the compiled Tailwind CSS -->
     <link href="/css/tailwind.css" rel="stylesheet" />
     <style>
-      /* Adjustments for layout */
       body {
         display: flex;
         flex-direction: column;
@@ -17,7 +16,7 @@
       .content-wrapper {
         display: flex;
         flex-grow: 1;
-        margin-top: 0px; /* Add margin to prevent overlap with nav */
+        margin-top: 0px;
       }
 
       .sidebar {
@@ -27,9 +26,9 @@
 
       .main-content {
         flex-grow: 1;
-        margin-left: 70px; /* Matches the sidebar width */
+        margin-left: 70px;
         padding: 20px;
-        background-color: #f9fafb; /* Light background for contrast */
+        background-color: #f9fafb;
       }
 
       .container {
@@ -41,16 +40,15 @@
   <body>
     <%- include('nav') %>
     <div class="content-wrapper">
-      <div class="sidebar">
-        <%- include('sidebar') %>
-      </div>
+      <div class="sidebar"><%- include('sidebar') %></div>
       <div class="main-content">
         <div class="container">
           <h1 class="text-4xl font-extrabold text-gray-800 mb-6">Users List</h1>
 
-          <!-- Table Container -->
           <div class="overflow-x-auto bg-white rounded-lg shadow-lg">
-            <table class="min-w-full table-auto border-collapse border border-gray-300">
+            <table
+              class="min-w-full table-auto border-collapse border border-gray-300"
+            >
               <thead class="bg-gray-100 text-gray-700">
                 <tr>
                   <th class="border px-4 py-3 text-sm font-medium text-center">
@@ -74,7 +72,6 @@
                 </tr>
               </thead>
               <tbody class="text-sm text-gray-600">
-                <!-- Loop through each user and display them in the table -->
                 <% users.forEach((user, index) => { %>
                 <tr class="hover:bg-gray-50 transition-all duration-300">
                   <td class="border px-4 py-3 text-center"><%= index + 1 %></td>
@@ -89,10 +86,8 @@
                   </td>
                   <td class="border px-4 py-3 text-center">
                     <%= user.isAuthor ? user.storyCount : '-' %>
-                    <!-- Placeholder for number of stories -->
                   </td>
                   <td class="border px-4 py-3 text-center">
-                    <!-- Action: Delete button -->
                     <form
                       action="/api/admin/delete_user/<%= user._id %>"
                       method="POST"

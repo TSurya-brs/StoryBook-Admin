@@ -8,7 +8,7 @@ const storiesSchema = mongoose.Schema({
     ref: "User",
     required: true,
   },
-  author: { type: String, required: true }, // Store author's name as a string
+  author: { type: String, required: true },
   likes: { type: Number, default: 0 },
   liked_by_id: { type: Array, default: [] },
   // likedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
