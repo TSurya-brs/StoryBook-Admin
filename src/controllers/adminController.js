@@ -27,10 +27,13 @@ const adminLogin = async (req, res, next) => {
     }
 
     req.session.user = user; // Save user in session
+    console.log("Session User:", req.session.user);
     return res.redirect("/api/admin/dashboard");
   } catch (error) {
     console.error("Error:", error);
-    return res.render("login", { message: "An error occurred. Please try again." });
+    return res.render("login", {
+      message: "An error occurred. Please try again.",
+    });
   }
 };
 
@@ -42,7 +45,9 @@ const adminDashboard = async (req, res, next) => {
     return res.render("dashboard", { userCount, storyCount });
   } catch (error) {
     console.log("Error:", error);
-    return res.status(500).json({ message: "Error on fetching the count of users and stories" });
+    return res
+      .status(500)
+      .json({ message: "Error on fetching the count of users and stories" });
   }
 };
 
@@ -54,9 +59,9 @@ const userList = async (req, res, next) => {
     for (let user of users) {
       if (user.isAuthor) {
         const storyCount = await Story.countDocuments({ author_id: user._id });
-        user.storyCount = storyCount;  
+        user.storyCount = storyCount;
       } else {
-        user.storyCount = 0;  
+        user.storyCount = 0;
       }
     }
 

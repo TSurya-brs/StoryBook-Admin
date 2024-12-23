@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import session from "express-session"; // Import session
+import MongoStore from "connect-mongo";
 
 // MongoDB connection
 import connectdb from "./src/config/db.js";
@@ -20,12 +21,17 @@ connectdb();
 // Session setup
 app.use(
   session({
-    secret: process.env.SESSION_SECRET || "mysecret", // Secret for the session
-    resave: false,
-    saveUninitialized: false,
+    secret: process.env.SESSION_SECRET || "mysecret", // Secret key for encrypting session data
+    resave: false, // Don't save session if not modified
+    saveUninitialized: false, // Don't save empty sessions
+    store: MongoStore.create({
+      mongoUrl: process.env.MONGO_URI, // Your MongoDB connection string
+      collectionName: "sessions", // This will create a separate collection named "sessions"
+      ttl: 3600, // Session TTL in seconds (Optional, e.g., 3600 = 1 hour)
+    }),
     cookie: {
-      secure: process.env.NODE_ENV === "production", // Ensure cookies are secure in production (over HTTPS)
-      maxAge: 3600000, // Session expires after 1 hour
+      secure: process.env.NODE_ENV === "production", // Use secure cookies in production
+      maxAge: 3600000, // Session expiration time (1 hour)
     },
   })
 );
