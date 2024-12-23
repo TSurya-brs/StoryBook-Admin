@@ -23,7 +23,7 @@ app.use(
     secret: process.env.SESSION_SECRET || "mysecret", // Session secret
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: true, maxAge: 3600000 }, // Session expires after 1 hour
+    cookie: { secure: false, maxAge: 3600000 }, // Session expires after 1 hour
   })
 );
 
@@ -37,6 +37,10 @@ app.set("views", "./src/views");
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/admin", adminRoute);
+
+app.get("/", (req, res) => {
+  res.redirect("/api/admin/login");
+});
 
 // Error Handlers
 app.use(notfound);
