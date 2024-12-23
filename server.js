@@ -22,7 +22,7 @@ app.use(
   session({
     secret: process.env.SESSION_SECRET || "mysecret", // Session secret
     resave: false,
-    saveUninitialized: false,
+    saveUninitialized: true,
     cookie: { secure: true, maxAge: 3600000 }, // Session expires after 1 hour
   })
 );
