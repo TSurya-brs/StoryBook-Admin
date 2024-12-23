@@ -1,8 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
-import session from "express-session";
-import MongoStore from "connect-mongo";
+import session from "express-session"; // Import session
 
 // MongoDB connection
 import connectdb from "./src/config/db.js";
@@ -21,17 +20,13 @@ connectdb();
 // Session setup
 app.use(
   session({
-    secret: process.env.SESSION_SECRET || "mysecret",
+    secret: process.env.SESSION_SECRET || "mysecret", // Session secret
     resave: false,
     saveUninitialized: false,
-    store: MongoStore.create({
-      mongoUrl: process.env.MONGO_URI,
-      collectionName: "sessions",
-      ttl: 3600,
-    }),
     cookie: {
-      secure: process.env.NODE_ENV === "production",
-      maxAge: 3600000,
+      secure: process.env.NODE_ENV === "production", // Set to true in production (for HTTPS)
+      maxAge: 3600000, // Session expires after 1 hour
+      httpOnly: true, // Make the cookie accessible only by the server
     },
   })
 );
@@ -39,18 +34,11 @@ app.use(
 app.use(express.json());
 app.use(cors());
 
+// Static files & view setup
 app.use(express.static("public"));
 app.set("view engine", "ejs");
 app.set("views", "./src/views");
 app.use(express.urlencoded({ extended: true }));
-
-app.get("/", (req, res) => {
-  res.redirect("/api/admin/login");
-});
-
-app.get("/api", (req, res) => {
-  res.redirect("/api/admin/login");
-});
 
 app.use("/api/admin", adminRoute);
 

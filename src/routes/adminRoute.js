@@ -9,6 +9,7 @@ import {
 } from "../controllers/adminController.js";
 
 const isAuthenticated = (req, res, next) => {
+  console.log("Session User:", req.session.user); // Debugging line
   if (req.session && req.session.user) {
     return next();
   } else {
